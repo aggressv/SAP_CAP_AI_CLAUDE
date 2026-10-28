@@ -1,0 +1,7 @@
+{		"xsappname": "CAP-Sales-auth",
+  "tenant-mode": "dedicated",
+  "scopes": [],
+  "attributes": [],
+  "role-templates": [],
+  "authorities-inheritance": false
+}

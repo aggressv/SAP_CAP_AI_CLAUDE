@@ -1,0 +1,64 @@
+{
+  "name": "sales-app",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "@cap-js/agents": "^0.9.8",
+    "@cap-js/hana": "^3.1.2",
+    "@google/genai": "^2.30.0",
+    "@sap/cds": "^10",
+    "@sap/xssec": "^4",
+    "cap-agent-ui5-webui": "^0.2.0",
+    "dotenv": "^18.0.9"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^3",
+    "@sap/cds-dk": "^10",
+    "cds-plugin-ui5": "^0.17.0",
+    "mbt": "^1.2.49",
+    "rimraf": "^5.0.5"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-salesorder-app1": "cds watch --open salesorders.salesorderapp1/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy sales-app --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-customersapp": "cds watch --open customers.customersapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-products": "cds watch --open products.products/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-productsapp": "cds watch --open products.productsapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-salesorderapp": "cds watch --open salesorders.salesorderapp/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "private": true,
+  "cds": {
+    "requires": {
+      "llm": {
+        "kind": "anthropic",
+      "model": "claude-haiku-5-5"
+      },
+      "db": "hana",
+      "[production]": {
+        "auth": "xsuaa"
+      },
+      "connectivity": true,
+      "destinations": true
+    }
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/salesorder-app1",
+    "app/customersapp",
+    "app/products",
+    "app/productsapp",
+    "app/customersapp",
+    "app/salesorderapp",
+    "app/customersapp",
+    "app/askai"
+  ],
+  "allowScripts": {
+    "mbt@1.2.49": true
+  }
+}
